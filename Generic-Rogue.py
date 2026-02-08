@@ -96,12 +96,15 @@ fastMode = False
 def textSpeed():
     while True:
         fastMode = False
-        userInput = input("""Text Speed? (fast/slow)
+        userInput = input("""
+Text Speed? 
+1. Fast 
+2. Slow
 --> """).lower()
-        if userInput == "fast":
+        if userInput == "1":
             fastMode = True
             return fastMode
-        elif userInput == "slow":
+        elif userInput == "2":
             fastMode = False
             return fastMode
         else:
@@ -152,8 +155,7 @@ Coins: {player.coins}
 
 1. Axe (20 damage), 200 coins
 2. Double Axe (50 damage), 2000 coins
-3. Exit
-""")
+3. Exit""")
         userInput = input("--> ")
         if userInput in ("1", "2"):
             buyItem(player, userInput)
@@ -170,10 +172,13 @@ def chooseBuild():
     clear()
     sleep(0.3)
     while True:
-        print("Which build will you pick?\n-Tank\n-Brawler")
-        userInput = input("---> ").capitalize()
-        if userInput in ("Tank", "Brawler"):
-            player.setBuild(userInput)
+        print("Which build will you pick?\n1. Tank\n2. Brawler")
+        userInput = input("---> ")
+        if userInput in ("1", "2"):
+            if userInput is "1":
+                player.setBuild("Tank")
+            elif userInput is "2":
+                player.setBuild("Brawler")
             clear()
             for itemData in shopItems.values():
                 itemName = itemData["name"]
