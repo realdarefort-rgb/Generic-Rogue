@@ -1,7 +1,12 @@
 import os
+import sys
 import random
 import time
 from pathlib import Path
+
+def restartProgram():
+    python = sys.executable
+    os.execl(python, python, *sys.argv)
 
 #region Load Saves
 saveFile = Path("savefile.txt")
@@ -338,4 +343,6 @@ with open(saveFile, "w") as file:
     file.write(f"Best Round: {bestRound}\n")
     file.write(f"Coins: {player.coins}\n")
     file.write(f"Inventory: {','.join(player.inventory)}\n")
+time.sleep(1.5)
+restartProgram()
 #endregion
