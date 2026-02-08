@@ -89,12 +89,40 @@ def enterUser():
 --> """)
     return username
 
+
+fastMode = False
+
+
+def textSpeed():
+    while True:
+        fastMode = False
+        userInput = input("""Text Speed? (fast/slow)
+--> """).lower()
+        if userInput == "fast":
+            fastMode = True
+            return fastMode
+        elif userInput == "slow":
+            fastMode = False
+            return fastMode
+        else:
+            clear()
+            continue
+        
+
+
+
+def sleep(s):
+    if not fastMode:
+        time.sleep(s)
+    if fastMode:
+        time.sleep(0.5)
+
 #endregion
 
 #region Shop
 shopItems = {
-    "1": {"name": "Axe", "price": 200, "effect":{"damage" : 20}},
-    "2": {"name": "Double Axe", "price": 2000, "effect":{"damage" : 50}},
+    "1": {"name": "Axe", "price": 200, "effect":{"damage" : 8}},
+    "2": {"name": "Double Axe", "price": 2000, "effect":{"damage" : 20}},
 }
 
 def buyItem(player, itemID):
@@ -140,7 +168,7 @@ Coins: {player.coins}
 #region Main Menu + Start Game
 def chooseBuild():
     clear()
-    time.sleep(0.3)
+    sleep(0.3)
     while True:
         print("Which build will you pick?\n-Tank\n-Brawler")
         userInput = input("---> ").capitalize()
@@ -152,7 +180,7 @@ def chooseBuild():
                 if itemName in player.inventory:
                     player.applyItem(itemData)
                                   
-            time.sleep(0.5)
+            sleep(0.5)
             break
         clear()
 
@@ -176,10 +204,11 @@ Items: {', '.join(player.inventory) if player.inventory else 'None'}
         elif userInput == "2":
             openShop(player)
         else:
-            time.sleep(0.1)
+            sleep(0.1)
 
 player.name = enterUser()
-time.sleep(0.5)
+fastMode = textSpeed()
+sleep(0.5)
 print("")
 mainMenu(player)
 #endregion
@@ -193,12 +222,12 @@ def chooseOption():
     return userInput
 
 def attack(self, target):
-    time.sleep(0.3)
+    sleep(0.3)
     print(f"{self.name} attacks {target.name} for {self.damage} damage!")
     target.health -= self.damage
-    time.sleep(0.75)
+    sleep(0.75)
     print(f"{target.name} took {self.damage} damage!")
-    time.sleep(0.3)
+    sleep(0.3)
 #endregion
 
 #region Round Logic 
@@ -225,7 +254,7 @@ def newEnemy():
 def roundStart(currentRound):
     roundMultiplier = 1 + (currentRound * 0.05)
     clear()
-    time.sleep(0.2)
+    sleep(0.2)
     enemyName = newEnemy()
     enemyDetails = enemyStats[enemyName]
     baseHealth = enemyDetails["health"]
@@ -237,7 +266,7 @@ def roundStart(currentRound):
     print(f"""You encounter a {enemyObject.name}!
 Health: {newHealth}
 Damage: {newDamage}""")
-    time.sleep(2)
+    sleep(2)
     return enemyObject
 
 
@@ -271,13 +300,13 @@ Coins: {player.coins}""")
             print("")
             attack(enemyObject, player)
     
-    time.sleep(0.5)
+    sleep(0.5)
     print("")
     print("You win!")
     wonCoins = enemyObject.difficulty
     player.coins += wonCoins
     print(f"You earnt {wonCoins} coins!")
-    time.sleep(2.5)
+    sleep(2.5)
 
 
 
